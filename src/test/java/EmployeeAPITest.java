@@ -66,6 +66,20 @@ public class EmployeeAPITest {
         Assert.assertEquals("employee_gender "+id, employeeResponse.getEmployee_gender());
     }
 
+    @Test
+    public  void get_allEmployeeDetails() {
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .when()
+                .get()
+                .then()
+                .extract().response();
+        Assert.assertEquals(HttpStatus.SC_OK, response.statusCode());
+        Assert.assertNotNull(response.getBody());
+        List<EmployeeResponse> employeeResponse = response.as(List.class, ObjectMapperType.GSON);
+        Assert.assertNotNull(employeeResponse);
+        Assert.assertTrue(employeeResponse.size()>0);
+    }
     //@Test
     public void deleteEmployeeDataById() {
         for (int i=250;i<300;i++){
